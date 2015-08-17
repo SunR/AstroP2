@@ -60,7 +60,7 @@ testingAccuracy = clf.score(testingSet, testingSetLabels)
 print "Testing accuracy = ", testingAccuracy
 print "Time = ", time.time() - startTime, "seconds"
 
-classificationSet = uncertains[:, 1:12]
+classificationSet = uncertains[:, 1:11]
 predictions = clf.predict(classificationSet) #use model to classify uncertains - SEE IF YOU CAN FIND CONFIDENCE INTERVAL FOR THIS PREDICTION AFTERWARD, THAT WILL BE PROGRESS
 
 uncertainsPredictions = np.column_stack((uncertains[:, 0:11], predictions)) #hstack doesn't work here, b/c multidimensional array?
