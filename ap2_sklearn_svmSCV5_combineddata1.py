@@ -65,7 +65,7 @@ predictions = clf.predict(classificationSet) #use model to classify uncertains -
 
 uncertainsPredictions = np.column_stack((uncertains[:, 0:11], predictions)) #hstack doesn't work here, b/c multidimensional array?
 
-f = open('uncertainsPredictionsOutput4.txt', 'w')
+f = open('uncertainsPredictionsOutput5.txt', 'w') #output 4 - run 1, output5 - run2 of this program
 
 uncertainsPredictions.tofile(f, sep=",", format="%f") #export array to file in floating point values, comma separated
 print "Finished writing predictions to file!"
