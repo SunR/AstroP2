@@ -22,7 +22,7 @@ data[:,4] = data[:,4] - data[:,5]#subtract i-z
 np.delete(data, 5, 1) #delete 5th col (5 for col#, 0/1 for row/col)
 
 isSpiral = data[:,10]#with one col removed!!
-isElliptical = data[:11] #corresponds to the elliptical bool value
+isElliptical = data[:,11] #corresponds to the elliptical bool value
 isUncertain = data[:,12]
 
 ellipticals = data[isElliptical == 1]
