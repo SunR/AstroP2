@@ -46,7 +46,7 @@ trainingSetLabels = trainingSet[:,11]  #putting labels in separate array
 trainingSetLabels[trainingSetLabels == 0] = -1 #replacing all 0 with -1 to match sklearn format
 counter = 0
 for i in trainingSetLabels:
-    if i == 1:
+    if i == -1:
         counter +=1
 print counter
 trainingSet = trainingSet[:, 1:10] #removing label cols from actual inputs
