@@ -19,10 +19,10 @@ gmr = data[:,2] - data[:,3]#subtract g-r
 rmi = data[:,3] - data[:,4]#subtract r-i
 imz = data[:,4] - data[:,5]#subtract i-z
 
-data = np.column_stack(data, umg) #add u-g, etc. to data array
-data = np.column_stack(data, gmr)
-data = np.column_stack(data, rmi)
-data = np.column_stack(data, imz)
+data = np.column_stack((data, umg)) #add u-g, etc. to data array
+data = np.column_stack((data, gmr))
+data = np.column_stack((data, rmi))
+data = np.column_stack((data, imz))
 
 
 isSpiral = data[:,11]#with one col removed!!
