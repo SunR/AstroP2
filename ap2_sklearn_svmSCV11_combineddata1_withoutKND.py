@@ -59,7 +59,7 @@ trainingSet = trainingSet[:, 1:11] #removing label cols from actual inputs
 startTime = time.time()
 print "Time before training = ", startTime
 
-clf = svm.SVC(C = 10, gamma = 0.0001) 
+clf = svm.SVC(C = 100, gamma = 1.0) 
 clf_info = clf.fit(trainingSet, trainingSetLabels)
 print clf_info
 
@@ -95,7 +95,7 @@ uncertainsPredictions = np.column_stack((uncertains[:, 0:11], predictions)) #hst
 
 f = open('uncertainsPredictionsOutputDensity2.txt', 'w') 
 
-uncertainsPredictions.tofile(f, sep=",", format="%f") #export array to file in floating point values, comma separated
+#uncertainsPredictions.tofile(f, sep=",", format="%f") #export array to file in floating point values, comma separated
 print "Finished writing predictions to file!"
 
 #FORMAT OF OUTPUT FILE: 
