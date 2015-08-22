@@ -19,11 +19,13 @@ coords = data[:, 1:3]
 
 print coords.shape
 
-knd = KNeighborsDensity("bayesian", 5) #try using something other than 10 for n_neighbors values, to experiment + optimize
+knd = KNeighborsDensity("bayesian", 30) #try using something other than 10 for n_neighbors values, to experiment + optimize
 knd.fit(coords)
 density = knd.eval(coords)
 
 data[:, 1] = density
+
+#data[:, 1] = 0
 
 data = np.delete(data, 2, 1) #(col# 2 , 0/1 for row/col)
 
