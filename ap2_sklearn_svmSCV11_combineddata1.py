@@ -13,7 +13,7 @@ import time
 
 
 #get just spirals and ellipticals in 1 array, shuffle them, then extract the label column
-data = np.loadtxt("crossmatched3_combineddata1_srane.txt", delimiter = ",", skiprows = 1, usecols = (1, 2, 3, 10, 11, 12, 13, 14, 49, 50, 51)) #dr7objid, petromag_u, petromag_g, petromag_r, pertomag_i, petromag_z, z(redshift),h alpha ew, h beta ew, OII ew, h delta ew, spiral, elliptical, uncertain
+data = np.loadtxt("crossmatched3_combineddata1_srane.txt", delimiter = ",", skiprows = 1, usecols = (1, 2, 3, 10, 11, 12, 13, 14, 35, 37, 39, 41, 43, 49, 50, 51)) #dr7objid, petromag_u, petromag_g, petromag_r, pertomag_i, petromag_z, z(redshift),h alpha ew, h beta ew, OII ew, h delta ew, spiral, elliptical, uncertain
 
 coords = data[:, 1:3]
 
@@ -29,11 +29,11 @@ data[:, 1] = density
 
 data = np.delete(data, 2, 1) #(col# 2 , 0/1 for row/col)
 
-isSpiral = data[:,7]#with one col removed!!
+isSpiral = data[:,12]#with one col removed!!
 #print data[:5, :]
-isElliptical = data[:,8] #corresponds to the elliptical bool value
+isElliptical = data[:,13] #corresponds to the elliptical bool value
 
-isUncertain = data[:,9]
+isUncertain = data[:,14]
 
 ellipticals = data[isElliptical == 1]
 
@@ -45,7 +45,7 @@ trainingSetSpirals = spirals[:50000] #extracting first 5000 spiral and elliptica
 
 trainingSet = np.vstack((trainingSetEllipticals, trainingSetSpirals))  #using only elliptical and spiral for training
 np.random.shuffle(trainingSet)
-trainingSetLabels = trainingSet[:,8]  #putting labels in separate array
+trainingSetLabels = trainingSet[:,13]  #putting labels in separate array
 
 trainingSetLabels[trainingSetLabels == 0] = -1 #replacing all 0 with -1 to match sklearn format
 counter = 0
@@ -53,7 +53,7 @@ for i in trainingSetLabels:
     if i == -1:
         counter +=1
 print counter
-trainingSet = trainingSet[:, 1:7] #removing label cols from actual inputs
+trainingSet = trainingSet[:, 1:12] #removing label cols from actual inputs
 startTime = time.time()
 print "Time before training = ", startTime
 
@@ -78,20 +78,20 @@ testingSetSpirals = spirals[50000:100000]
 
 testingSet = np.vstack((testingSetEllipticals, testingSetSpirals))  #using only elliptical and spiral for training
 np.random.shuffle(testingSet)
-testingSetLabels = testingSet[:,8]  #putting labels in separate array
+testingSetLabels = testingSet[:,13]  #putting labels in separate array
 testingSetLabels[testingSetLabels == 0] = -1 #replacing all 0 with -1 to match sklearn format
-testingSet = testingSet[:, 1:7] #removing label cols from actual inputs
+testingSet = testingSet[:, 1:12] #removing label cols from actual inputs
 
 testingAccuracy = clf.score(testingSet, testingSetLabels)
 print "Testing accuracy = ", testingAccuracy
 print "Time = ", time.time() - startTime, "seconds"
 
-classificationSet = uncertains[:, 1:7]
+classificationSet = uncertains[:, 1:12]
 predictions = clf.predict(classificationSet) #use model to classify uncertains - SEE IF YOU CAN FIND CONFIDENCE INTERVAL FOR THIS PREDICTION AFTERWARD, THAT WILL BE PROGRESS
 
-uncertainsPredictions = np.column_stack((uncertains[:, 0:7], predictions)) #hstack doesn't work here, b/c multidimensional array?
+uncertainsPredictions = np.column_stack((uncertains[:, 0:12], predictions)) #hstack doesn't work here, b/c multidimensional array?
 
-f = open('uncertainsPredictionsOutputDensity1.txt', 'w') 
+f = open('uncertainsPredictionsOutputDensity2.txt', 'w') 
 
 uncertainsPredictions.tofile(f, sep=",", format="%f") #export array to file in floating point values, comma separated
 print "Finished writing predictions to file!"
