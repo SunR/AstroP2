@@ -47,12 +47,12 @@ ellipticals = data[isElliptical == 1]
 spirals = data[isSpiral == 1]
 uncertains = data[isUncertain == 1]
 
-umr = spirals[:, 15]
-density = spirals[:, 1]
+umr = ellipticals[:, 15]
+density = ellipticals[:, 1]
 plt.scatter(umr, density)
 plt.xlabel("u-r")
 plt.ylabel("Environment density")
-plt.title("Spiral Galaxies as identified by Galaxy Zoo Volunteers")
+plt.title("Elliptical Galaxies as identified by Galaxy Zoo Volunteers")
 plt.show()
 
 
