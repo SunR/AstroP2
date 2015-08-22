@@ -25,7 +25,7 @@ density = knd.eval(coords)
 
 data[:, 1] = density
 
-sdata = np.delete(data, 2, 1) #(col# 2 , 0/1 for row/col)
+data = np.delete(data, 2, 1) #(col# 2 , 0/1 for row/col)
 
 isSpiral = data[:,7]#with one col removed!!
 #print data[:5, :]
