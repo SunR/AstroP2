@@ -17,9 +17,9 @@ import matplotlib.pyplot as plt
 #get just spirals and ellipticals in 1 array, shuffle them, then extract the label column
 data = np.loadtxt("crossmatched3_combineddata1_srane.txt", delimiter = ",", skiprows = 1, usecols = (1, 2, 3, 10, 11, 12, 13, 14, 35, 37, 39, 41, 43, 49, 50, 51)) #dr7objid, petromag_u, petromag_g, petromag_r, pertomag_i, petromag_z, z(redshift),h alpha ew, h beta ew, OII ew, h delta ew, spiral, elliptical, uncertain
 
-umr = data[:, 3] - data[:, 5] #u-r color
+#umr = data[:, 3] - data[:, 5] #u-r color
 
-data = np.column_stack((data, umr))
+#data = np.column_stack((data, umr))
 
 coords = data[:, 1:3]
 
@@ -32,7 +32,6 @@ density = knd.eval(coords)
 
 data[:, 1] = density #!!!!! CHECK, is this still in order??
 
-#data[:, 1] = 0
 
 data = np.delete(data, 2, 1) #(col# 2 , 0/1 for row/col)
 print "finished knd"
@@ -47,10 +46,11 @@ ellipticals = data[isElliptical == 1]
 spirals = data[isSpiral == 1]
 uncertains = data[isUncertain == 1]
 
-umr = spirals[:, 15]
+hAlpha = spirals[:, 8] #halpa equivalent width, keep in mind 1 col of array has been removed
+
 density = spirals[:, 1]
-plt.scatter(umr, density)
-plt.xlabel("u-r")
+plt.scatter(hAlpha, density)
+plt.xlabel("Equivalent width of H-alpha emission line")
 plt.ylabel("Environment density")
 plt.title("Spiral Galaxies as identified by Galaxy Zoo Volunteers")
 plt.show()

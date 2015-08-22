@@ -32,7 +32,6 @@ density = knd.eval(coords)
 
 data[:, 1] = density #!!!!! CHECK, is this still in order??
 
-#data[:, 1] = 0
 
 data = np.delete(data, 2, 1) #(col# 2 , 0/1 for row/col)
 print "finished knd"
@@ -47,11 +46,12 @@ ellipticals = data[isElliptical == 1]
 spirals = data[isSpiral == 1]
 uncertains = data[isUncertain == 1]
 
+hAlpha = spirals[:, 8] #halpa equivalent width, keep in mind 1 col of array has been removed
+
 umr = spirals[:, 15]
-density = spirals[:, 1]
-plt.scatter(umr, density)
-plt.xlabel("u-r")
-plt.ylabel("Environment density")
+plt.scatter(hAlpha, umr)
+plt.xlabel("Equivalent width of H-alpha emission line")
+plt.ylabel("u-r")
 plt.title("Spiral Galaxies as identified by Galaxy Zoo Volunteers")
 plt.show()
 
