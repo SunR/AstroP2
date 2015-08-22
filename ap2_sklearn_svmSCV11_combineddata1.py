@@ -13,13 +13,14 @@ import time
 
 
 #get just spirals and ellipticals in 1 array, shuffle them, then extract the label column
-data = np.loadtxt("crossmatched3_combineddata1_srane.txt", delimiter = ",", skiprows = 1, usecols = (1, 2, 3, 10, 11, 12, 13, 14, 35, 37, 39, 41, 43, 49, 50, 51)) #dr7objid, petromag_u, petromag_g, petromag_r, pertomag_i, petromag_z, z(redshift),h alpha ew, h beta ew, OII ew, h delta ew, spiral, elliptical, uncertain
+data = np.loadtxt("crossmatched3_combineddata1_srane.txt", delimiter = ",", skiprows = 1, usecols = (1, 10, 11, 12, 13, 14, 35, 37, 39, 41, 43, 49, 50, 51)) #dr7objid, petromag_u, petromag_g, petromag_r, pertomag_i, petromag_z, z(redshift),h alpha ew, h beta ew, OII ew, h delta ew, spiral, elliptical, uncertain
 
 coords = data[:, 1:3]
 
 print coords.shape
 
-knd = KNeighborsDensity("bayesian", 30) #try using something other than 10 for n_neighbors values, to experiment + optimize
+print "started knd"
+knd = KNeighborsDensity("bayesian", 10) #try using something other than 10 for n_neighbors values, to experiment + optimize
 knd.fit(coords)
 density = knd.eval(coords)
 
@@ -28,6 +29,7 @@ data[:, 1] = density
 #data[:, 1] = 0
 
 data = np.delete(data, 2, 1) #(col# 2 , 0/1 for row/col)
+print "finished knd"
 
 isSpiral = data[:,12]#with one col removed!!
 #print data[:5, :]
