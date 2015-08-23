@@ -44,7 +44,7 @@ print len(trainingSet)
 
 trainingSet, testingSet, trainingSetLabels, testingSetLabels = train_test_split(trainingSet, trainingSetLabels, test_size = 0.6, random_state = 0) #fixes random_state so results reproducible
 
-tuned_parameters = [{'kernel':['rbf'], 'gamma':[0, 1e-10, 1e-5, 0.1, 1], 'C':[1, 10, 100, 1000, 10000]}, {'kernel':['linear'], 'C':[1, 10, 100, 1000, 10000]}] #try 2 diff kernels, w/ many diff params, and optimize
+tuned_parameters = [{'kernel':['rbf'], 'gamma':[0, 1e-10, 1e-5, 0.1, 1], 'C':[1, 10, 100, 1000, 10000]}] #try 2 diff kernels, w/ many diff params, and optimize
 
 scores = ['precision', 'accuracy', 'recall']
 
@@ -62,7 +62,6 @@ for score in scores:
     print "Time:", time.time() - startTime
     print "Grid scores on development set:"
     print clf.grid_scores_
-    print "Best params found on development set:"
     print
     print "Detailed classification report:"
     print "Model is trained on full development set."
