@@ -5,7 +5,7 @@ import numpy as np
 from sklearn import svm
 from sklearn.cross_validation import train_test_split
 from sklearn.grid_search import GridSearchCV
-import astroML.metrics import classification_report
+from sklearn.metrics import classification_report
 from astroML.datasets import fetch_sdss_specgals
 from astroML.density_estimation import KNeighborsDensity
 import time
@@ -34,21 +34,45 @@ trainingSet = np.vstack((trainingSetEllipticals, trainingSetSpirals))  #using on
 np.random.shuffle(trainingSet)
 trainingSetLabels = trainingSet[:,12]  #putting labels in separate array
 
+print len(trainingSet), len(trainingSetLabels)
+
 trainingSetLabels[trainingSetLabels == 0] = -1 #replacing all 0 with -1 to match sklearn format
 
 trainingSet = trainingSet[:, 1:11] #removing label cols from actual inputs
 
-trainingSet, trainingSetLabels, testingSet, testingSetLabels = train_test_split(trainingSet, trainingSetLabels, test_size = 0.6, random_state = 0) #fixes random_state so results reproducible
+print len(trainingSet)
 
-tuned_parameters = [{'kernel':['rbf'], 'gamma':[0, 1e-10, 1e-5, 0.1, 1], 'C':[1, 10, 100, 1000, 10000]}, {'kernel':[linear], 'C':[1, 10, 100, 1000, 10000]}] #try 2 diff kernels, w/ many diff params, and optimize
+trainingSet, testingSet, trainingSetLabels, testingSetLabels = train_test_split(trainingSet, trainingSetLabels, test_size = 0.6, random_state = 0) #fixes random_state so results reproducible
+
+tuned_parameters = [{'kernel':['rbf'], 'gamma':[0, 1e-10, 1e-5, 0.1, 1], 'C':[1, 10, 100, 1000, 10000]}, {'kernel':['linear'], 'C':[1, 10, 100, 1000, 10000]}] #try 2 diff kernels, w/ many diff params, and optimize
 
 scores = ['precision', 'recall']
+
 
 startTime = time.time()
 print "Time before training = ", startTime
 
-
-
-print "Done training! Time = ", time.time() - startTime, "seconds"
-#Training accuracy
+for score in scores:
+    print "Tuning hyper-parameters for", score
+    print
+    clf = GridSearchCV(svm.SVC(C=1), tuned_parameters, cv = 10, scoring = score) #cv = #of folds of cross-validation
+    clf.fit(trainingSet, trainingSetLabels)
+    print "Best parameters found of development set:"
+    print clf.best_params_
+    print "Time:", time.time() - startTime
+    print "Grid scores on development set:"
+    print clf.grid_scores_
+    print "Best params found on development set:"
+    print
+    print "Detailed classification report:"
+    print "Model is trained on full development set."
+    print "Scores are computed on the full evaluation set."
+    true, predicted = trainingSetLabels, clf.predict(trainingSet)
+    print "Training set classification report:"
+    print classification_report(true, predicted)
+    true, predicted = testingSetLabels, clf.predict(testingSet)
+    print "Testing set classification report:"
+    print classification_report(true, predicted)
+    
+print "Done training and testing! Time = ", time.time() - startTime, "seconds"
 
