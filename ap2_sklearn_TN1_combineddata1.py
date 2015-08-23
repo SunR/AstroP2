@@ -2,20 +2,18 @@ from __future__ import division
 from math import *
 import random
 import numpy as np
-from sklearn import svm
-from sklearn.cross_validation import train_test_split
-from sklearn.grid_search import GridSearchCV
-from sklearn.metrics import classification_report
-from sklearn import tree
-from sklearn.naive_bayes import GaussianNB
-from astroML.datasets import fetch_sdss_specgals
-from astroML.density_estimation import KNeighborsDensity
+import climate
+import theanets
+from sklearn.metrics import classification_report, confusion_matrix
 import time
 
-#Photometric and spectral data, basic decision tree
+#Photometric and spectral data, neural network in theanet
 
+#FIGURE OUT HOW TO USE DROPOUT WITH THIS!
 
-print "Gaussian Naive - Bayes Classifier" #try Gaussian first, then other types
+climate.enable_default_logging()
+
+print "Theanet Neural Network Classifier" #try Radius Neighbor Classifer!! This will give better estimate of density...(?)
 #get just spirals and ellipticals in 1 array, shuffle them, then extract the label column
 data = np.loadtxt("crossmatched3_combineddata1_srane.txt", delimiter = ",", skiprows = 1, usecols = (1, 10, 11, 12, 13, 14, 35, 37, 39, 41, 43, 49, 50, 51)) #dr7objid, petromag_u, petromag_g, petromag_r, pertomag_i, petromag_z, z(redshift),h alpha ew, h beta ew, OII ew, h delta ew, spiral, elliptical, uncertain
 
@@ -45,11 +43,16 @@ trainingSet, testingSet, trainingSetLabels, testingSetLabels = train_test_split(
 startTime = time.time()
 print "Time before training = ", startTime
 
-clf = GaussianNB()
-clf = clf.fit(trainingSet, trainingSetLabels)
+clf = theanets.Classifier(layers = [10, 5, 2]) #dummy values for layers for now, 1 hidden layer -- 10 inputs mapped to a binary classification output (2 choices)
+clf = clf.train([trainingSet, trainingSetLabels], [testingSet, testingSetLabels], algo = 'sgd',  #theanets uses training/validation split to mean training/testing split, methinks
+                learning_rate = 0.0001, momentum = 0.9, hidden_l1 = 0.1, #sparse regularizer
+                input_noise = 0.1, hidden_noise = 0.1, input_dropout = 0.3, hidden_dropout = 0.3, #Dropout and Noise regularizer to prevent overfitting
+                save_progress = "TN1_model_save.txt", save_every = 1000)
 
-print "Params after training:"
-print clf.get_params()
+#print "Params after training:"
+#print clf.find('layer_name', 'variable') #print params later
+
+#Visualize weights!!! 
 
 trainingAccuracy = clf.score(trainingSet, trainingSetLabels)
 

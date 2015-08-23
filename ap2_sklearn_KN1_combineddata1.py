@@ -7,6 +7,7 @@ from sklearn.cross_validation import train_test_split
 from sklearn.grid_search import GridSearchCV
 from sklearn.metrics import classification_report
 from sklearn import tree
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 from astroML.datasets import fetch_sdss_specgals
 from astroML.density_estimation import KNeighborsDensity
@@ -15,7 +16,7 @@ import time
 #Photometric and spectral data, basic decision tree
 
 
-print "Gaussian Naive - Bayes Classifier" #try Gaussian first, then other types
+print "K-Neighbors Classifier" #try Radius Neighbor Classifer!! This will give better estimate of density...(?)
 #get just spirals and ellipticals in 1 array, shuffle them, then extract the label column
 data = np.loadtxt("crossmatched3_combineddata1_srane.txt", delimiter = ",", skiprows = 1, usecols = (1, 10, 11, 12, 13, 14, 35, 37, 39, 41, 43, 49, 50, 51)) #dr7objid, petromag_u, petromag_g, petromag_r, pertomag_i, petromag_z, z(redshift),h alpha ew, h beta ew, OII ew, h delta ew, spiral, elliptical, uncertain
 
@@ -45,7 +46,7 @@ trainingSet, testingSet, trainingSetLabels, testingSetLabels = train_test_split(
 startTime = time.time()
 print "Time before training = ", startTime
 
-clf = GaussianNB()
+clf = KNeighborsClassifier(n_neighbors = 5) #starting off with 5 neighbors for now
 clf = clf.fit(trainingSet, trainingSetLabels)
 
 print "Params after training:"
