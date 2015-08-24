@@ -9,7 +9,7 @@ import time
 
 #Photometric and spectral data, neural network in theanet
 
-#FIGURE OUT HOW TO USE DROPOUT WITH THIS!
+#FIGURE OUT HOW TO USE DROPOUT WITH THIS! - done, using it! :) 
 
 climate.enable_default_logging()
 
