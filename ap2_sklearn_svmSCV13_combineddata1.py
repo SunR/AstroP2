@@ -46,7 +46,7 @@ trainingSet, testingSet, trainingSetLabels, testingSetLabels = train_test_split(
 
 tuned_parameters = [{'kernel':['rbf'], 'gamma':[0, 1e-10, 1e-5, 0.1, 1], 'C':[1, 10, 100, 1000, 10000]}] #try 2 diff kernels, w/ many diff params, and optimize
 
-scores = ['precision', 'accuracy', 'recall']
+scores = ['accuracy', 'recall']
 
 
 startTime = time.time()
