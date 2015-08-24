@@ -44,7 +44,7 @@ trainingSet, testingSet, trainingSetLabels, testingSetLabels = train_test_split(
 startTime = time.time()
 print "Time before training = ", startTime
 
-clf = tree.DecisionTreeClassifer(max_depth = 3)
+clf = tree.DecisionTreeClassifier(max_depth = 10)
 clf = clf.fit(trainingSet, trainingSetLabels)
 
 print "Params after training:"

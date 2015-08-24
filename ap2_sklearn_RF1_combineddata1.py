@@ -45,7 +45,7 @@ trainingSet, testingSet, trainingSetLabels, testingSetLabels = train_test_split(
 startTime = time.time()
 print "Time before training = ", startTime
 
-clf = RandomForestClassifer() #No max depth initial, tweak as necessary later
+clf = RandomForestClassifier() #No max depth initial, tweak as necessary later
 clf = clf.fit(trainingSet, trainingSetLabels)
 
 print "Params after training:"
