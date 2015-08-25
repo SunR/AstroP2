@@ -4,6 +4,7 @@ import random
 import numpy as np
 import climate
 import theanets
+from sklearn.cross_validation import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 import time
 
@@ -44,7 +45,7 @@ startTime = time.time()
 print "Time before training = ", startTime
 
 clf = theanets.Classifier(layers = [10, 5, 2]) #dummy values for layers for now, 1 hidden layer -- 10 inputs mapped to a binary classification output (2 choices)
-clf = clf.train([trainingSet, trainingSetLabels], [testingSet, testingSetLabels], algo = 'sgd',  #theanets uses training/validation split to mean training/testing split, methinks
+clf.train([trainingSet, trainingSetLabels], [testingSet, testingSetLabels], algo = 'sgd',  #theanets uses training/validation split to mean training/testing split, methinks
                 learning_rate = 0.0001, momentum = 0.9, hidden_l1 = 0.1, #sparse regularizer
                 input_noise = 0.1, hidden_noise = 0.1, input_dropout = 0.3, hidden_dropout = 0.3, #Dropout and Noise regularizer to prevent overfitting
                 save_progress = "TN1_model_save.txt", save_every = 1000)
