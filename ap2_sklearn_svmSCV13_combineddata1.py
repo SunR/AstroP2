@@ -44,7 +44,7 @@ print len(trainingSet)
 
 trainingSet, testingSet, trainingSetLabels, testingSetLabels = train_test_split(trainingSet, trainingSetLabels, test_size = 0.6, random_state = 0) #fixes random_state so results reproducible
 
-tuned_parameters = [{'kernel':['rbf'], 'gamma':[0, 0.1, 1], 'C':[1, 10, 100]}] #try 2 diff kernels, w/ many diff params, and optimize
+tuned_parameters = [{'kernel':['rbf'], 'gamma':[0, 0.1], 'C':[1, 10]}] #try 2 diff kernels, w/ many diff params, and optimize
 
 scores = ['accuracy', 'recall']
 
