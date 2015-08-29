@@ -56,9 +56,9 @@ y_test = y[150000:]
 
 nn = Classifier(
     layers=[
-        Layer("Rectifier", units=100),
-        Layer("Linear")],
-    learning_rate=0.0002,
+        Layer("Sigmoid", units=100),
+        Layer("Softmax")],
+    learning_rate=0.000000002,
     n_iter=10)
 nn.fit(X_train, y_train)
 
@@ -66,4 +66,6 @@ y_valid = nn.predict(X_valid)  #OHHHH so the predict functions are always for va
 
 score = nn.score(X_test, y_test)
 
-print score
+print "Scoore = ", score
+
+print "Time = ", time.time() - startTime, "seconds"
