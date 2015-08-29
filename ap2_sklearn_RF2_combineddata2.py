@@ -16,13 +16,17 @@ import time
 
 print "Random Forest Classifier"
 
+data = np.genfromtxt("combined2_w_velDisp_srane2.txt", delimiter = ",", skiprows = 1, usecols = (51,))
+
+print data[:5]
+
 #get just spirals and ellipticals in 1 array, shuffle them, then extract the label column
-data = np.loadtxt("crossmatched3_combineddata1_srane.txt", delimiter = ",", skiprows = 1, usecols = (1, 10, 11, 12, 13, 14, 35, 37, 39, 41, 43, 49, 50, 51)) #dr7objid, petromag_u, petromag_g, petromag_r, pertomag_i, petromag_z, z(redshift),h alpha ew, h beta ew, OII ew, h delta ew, spiral, elliptical, uncertain
+data = np.loadtxt("combined2_w_velDisp_srane2.txt", delimiter = ",", skiprows = 1, usecols = (1, 10, 11, 12, 13, 14, 35, 37, 39, 41, 43, 58, 49, 50, 51))
 
-isSpiral = data[:,11]
-isElliptical = data[:,12] #corresponds to the elliptical bool value
+isSpiral = data[:,12]
+isElliptical = data[:,13] #corresponds to the elliptical bool value
 
-isUncertain = data[:,13]
+isUncertain = data[:,14]
 
 ellipticals = data[isElliptical == 1]
 
@@ -34,11 +38,11 @@ trainingSetSpirals = spirals
 
 trainingSet = np.vstack((trainingSetEllipticals, trainingSetSpirals))  #using only elliptical and spiral for training
 np.random.shuffle(trainingSet)
-trainingSetLabels = trainingSet[:,12]  #putting labels in separate array
+trainingSetLabels = trainingSet[:,13]  #putting labels in separate array
 
 trainingSetLabels[trainingSetLabels == 0] = -1 #replacing all 0 with -1 to match sklearn format
 
-trainingSet = trainingSet[:, 1:11] #removing label cols from actual inputs
+trainingSet = trainingSet[:, 1:12] #removing label cols from actual inputs
 
 trainingSet, testingSet, trainingSetLabels, testingSetLabels = train_test_split(trainingSet, trainingSetLabels, test_size = 0.6, random_state = 0) #fixes random_state so results reproducible
 
