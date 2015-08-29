@@ -27,8 +27,8 @@ ellipticals = data[isElliptical == 1]
 spirals = data[isSpiral == 1]
 uncertains = data[isUncertain == 1]
 
-trainingSetEllipticals = ellipticals[:5000] #use all of set b/c cross validation will split into training and testing sets
-trainingSetSpirals = spirals[:5000]
+trainingSetEllipticals = ellipticals #use all of set b/c cross validation will split into training and testing sets
+trainingSetSpirals = spirals
 
 trainingSet = np.vstack((trainingSetEllipticals, trainingSetSpirals))  #using only elliptical and spiral for training
 np.random.shuffle(trainingSet)
@@ -50,27 +50,27 @@ y = y.astype(np.int32)
 
 # -- split the data into training, validation and test sets --
 
-def split_data(X, y, slices):
-
-    #Splits the data into training, validation and test sets.
-
-    datasets = {}
-    starts = np.floor(np.cumsum(len(X) * np.hstack([0, slices[:-1]])))
-    slices = {
-        'training': slice(starts[0], starts[1]),
-        'validation': slice(starts[1], starts[2]),
-        'test': slice(starts[2], None)}
-    data = X, y
-    def slice_data(data, sli):
-        return tuple(d[sli] for d in data)
-    for label in slices:
-        datasets[label] = slice_data(data, slices[label])
-    return datasets
+##def split_data(X, y, slices):
+##
+##    #Splits the data into training, validation and test sets.
+##
+##    datasets = {}
+##    starts = np.floor(np.cumsum(len(X) * np.hstack([0, slices[:-1]])))
+##    slices = {
+##        'training': slice(starts[0], starts[1]),
+##        'validation': slice(starts[1], starts[2]),
+##        'test': slice(starts[2], None)}
+##    data = X, y
+##    def slice_data(data, sli):
+##        return tuple(d[sli] for d in data)
+##    for label in slices:
+##        datasets[label] = slice_data(data, slices[label])
+##    return datasets
 
 datasets = {}
-datasets['training'] = (X[:6000], y[:6000])
-datasets['validation'] = (X[6000:8000], y[6000:8000])
-datasets['test'] = (X[8000:10000], y[8000:10000])
+datasets['training'] = (X[:100000], y[:100000])
+datasets['validation'] = (X[100000:150000], y[100000:150000])
+datasets['test'] = (X[150000:], y[150000:])
 
 print datasets['training'][0].shape, datasets['validation'][0].shape
 
@@ -78,17 +78,15 @@ print datasets['training'][0].shape, datasets['validation'][0].shape
 exp = theanets.Experiment(
     theanets.Classifier,
     # (input dimension, hidden layer size, output dimension = number of classes)
-    layers=(10, 10, 10, 5, 5, 5, 2))
+    layers=(10, 5, 2))
 
 # train the network - stochastic gradient descent
 exp.train(
     datasets['training'],
     datasets['validation'],
     optimize='sgd',
-    min_improvement = 0.005,
-    learning_rate=0.01,
-    momentum=0.5,
-    hidden_l1=0.5)
+    learning_rate=0.000001,
+    momentum=0.000005)
 
 print "Done training! Time = ", time.time()-startTime, "seconds"
 #evaluate the model on test data
