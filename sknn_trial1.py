@@ -57,6 +57,7 @@ y_test = y[150000:]
 nn = Classifier(
     layers=[
         Layer("Sigmoid", units=100),
+        Layer("Rectifier", units=100),
         Layer("Softmax")],
     learning_rate=0.000000002,
     n_iter=10)
