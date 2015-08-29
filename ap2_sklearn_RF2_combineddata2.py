@@ -15,13 +15,12 @@ import time
 #Photometric and spectral data, random forest classifer
 
 print "Random Forest Classifier"
-
-data = np.genfromtxt("combined2_w_velDisp_srane2.txt", delimiter = ",", skiprows = 1, usecols = (51,))
+data = np.loadtxt("crossmatched3_combineddata1_srane.txt", delimiter = ",", skiprows = 1, usecols = (37,)) #after row 35 creates the problems..
 
 print data[:5]
 
 #get just spirals and ellipticals in 1 array, shuffle them, then extract the label column
-data = np.loadtxt("combined2_w_velDisp_srane2.txt", delimiter = ",", skiprows = 1, usecols = (1, 10, 11, 12, 13, 14, 35, 37, 39, 41, 43, 58, 49, 50, 51))
+data = np.loadtxt("combined2_w_velDisp_srane2.txt", delimiter = ",", skiprows = 1, usecols = (1, 10, 11, 12, 13, 14, 35, 37, 39, 41, 43, 49, 50, 51)) #58, 
 
 isSpiral = data[:,12]
 isElliptical = data[:,13] #corresponds to the elliptical bool value

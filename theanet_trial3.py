@@ -11,7 +11,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 import matplotlib.pyplot as plt
 import time
 
-#climate.enable_default_logging()
+climate.enable_default_logging()
 
 startTime = time.time()
 
@@ -27,8 +27,8 @@ ellipticals = data[isElliptical == 1]
 spirals = data[isSpiral == 1]
 uncertains = data[isUncertain == 1]
 
-trainingSetEllipticals = ellipticals #use all of set b/c cross validation will split into training and testing sets
-trainingSetSpirals = spirals
+trainingSetEllipticals = ellipticals[:5000] #use all of set b/c cross validation will split into training and testing sets
+trainingSetSpirals = spirals[:5000]
 
 trainingSet = np.vstack((trainingSetEllipticals, trainingSetSpirals))  #using only elliptical and spiral for training
 np.random.shuffle(trainingSet)
@@ -51,11 +51,9 @@ y = y.astype(np.int32)
 # -- split the data into training, validation and test sets --
 
 def split_data(X, y, slices):
-    '''
-    Splits the data into training, validation and test sets.
-    slices - relative sizes of each set (training, validation, test)
-        test - provide None, since it is computed automatically
-    '''
+
+    #Splits the data into training, validation and test sets.
+
     datasets = {}
     starts = np.floor(np.cumsum(len(X) * np.hstack([0, slices[:-1]])))
     slices = {
@@ -69,25 +67,31 @@ def split_data(X, y, slices):
         datasets[label] = slice_data(data, slices[label])
     return datasets
 
-datasets = split_data(X, y, (0.6, 0.2, None))
+datasets = {}
+datasets['training'] = (X[:6000], y[:6000])
+datasets['validation'] = (X[6000:8000], y[6000:8000])
+datasets['test'] = (X[8000:10000], y[8000:10000])
+
+print datasets['training'][0].shape, datasets['validation'][0].shape
 
 # plain neural network with a single hidden layer
 exp = theanets.Experiment(
     theanets.Classifier,
     # (input dimension, hidden layer size, output dimension = number of classes)
-    layers=(10, 2, 2))
+    layers=(10, 10, 10, 5, 5, 5, 2))
 
-# train the network via stochastic gradient descent
+# train the network - stochastic gradient descent
 exp.train(
     datasets['training'],
     datasets['validation'],
     optimize='sgd',
+    min_improvement = 0.005,
     learning_rate=0.01,
     momentum=0.5,
-    hidden_l1=0.1)
+    hidden_l1=0.5)
 
 print "Done training! Time = ", time.time()-startTime, "seconds"
-# -- evaluate the model on test data --
+#evaluate the model on test data
 
 X_test, y_test = datasets['test']
 y_pred = exp.network.classify(X_test)
