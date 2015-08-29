@@ -57,16 +57,15 @@ y_test = y[150000:]
 nn = Classifier(
     layers=[
         Layer("Sigmoid", units=100),
-        Layer("Rectifier", units=100),
         Layer("Softmax")],
     learning_rate=0.000000002,
-    n_iter=10)
+    n_iter=1000)
 nn.fit(X_train, y_train)
 
 y_valid = nn.predict(X_valid)  #OHHHH so the predict functions are always for validation!! (?) ... *facepalm*
 
 score = nn.score(X_test, y_test)
 
-print "Scoore = ", score
+print "Score = ", score
 
 print "Time = ", time.time() - startTime, "seconds"
