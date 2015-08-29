@@ -46,7 +46,7 @@ trainingSetLabels[trainingSetLabels == 0] = -1 #replacing all 0 with -1 to match
 
 trainingSet = trainingSet[:, :30] #removing label cols from actual inputs
 
-trainingSet, testingSet, trainingSetLabels, testingSetLabels = train_test_split(trainingSet, trainingSetLabels, test_size = 0.6, random_state = 0) #fixes random_state so results reproducible
+trainingSet, testingSet, trainingSetLabels, testingSetLabels = train_test_split(trainingSet, trainingSetLabels, test_size = 0.25, random_state = 0) #test_size was way too high...0.6!
 
 startTime = time.time()
 print "Time before training = ", startTime
