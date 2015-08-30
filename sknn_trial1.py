@@ -60,7 +60,7 @@ nn = Classifier(
         Layer("Softmax")],
     learning_rate=0.000002,
     valid_set = ((X_valid, y_valid)),
-    n_iter=5000)
+    n_iter=10000)
 print "Neural network specifications:"
 print nn
 nn.fit(X_train, y_train)
