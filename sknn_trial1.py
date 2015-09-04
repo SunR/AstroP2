@@ -59,15 +59,24 @@ nn = Classifier(
         Layer("Sigmoid", units=100),
         Layer("Softmax")],
     learning_rate=0.000002,  #valid_set = ((X_valid, y_valid))
-    n_iter=5000)
+    n_iter=10000)
 print "Neural network specifications:"
 print nn
+
 nn.fit(X_train, y_train)
 
 y_valid = nn.predict(X_valid)  #OHHHH so the predict functions are always for validation!! (?) ... *facepalm*
 
-score = nn.score(X_test, y_test)
+score1 = nn.score(X_train, y_train)
 
-print "Score = ", score
+score2 = nn.score(X_valid, y_valid)
+
+score3 = nn.score(X_test, y_test)
+
+print "Training accuracy = ", score1
+
+print "Validation accuracy = ", score2
+
+print "Testing accuracy = ", score3
 
 print "Time = ", time.time() - startTime, "seconds"
