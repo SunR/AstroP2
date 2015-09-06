@@ -48,11 +48,11 @@ trainingSetSpirals = spirals
 
 trainingSet = np.vstack((trainingSetEllipticals, trainingSetSpirals))  #using only elliptical and spiral for training
 np.random.shuffle(trainingSet)
-trainingSetLabels = trainingSet[:,12]  #putting labels in separate array
+trainingSetLabels = trainingSet[:,31]  #putting labels in separate array
 
 trainingSetLabels[trainingSetLabels == 0] = -1 #replacing all 0 with -1 to match sklearn format
 
-trainingSet = trainingSet[:, 1:11] #removing label cols from actual inputs
+trainingSet = trainingSet[:, 1:30] #removing label cols from actual inputs
 
 X = trainingSet
 y = trainingSetLabels
