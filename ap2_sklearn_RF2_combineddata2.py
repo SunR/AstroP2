@@ -12,7 +12,7 @@ from astroML.datasets import fetch_sdss_specgals
 from astroML.density_estimation import KNeighborsDensity
 import time
 
-#Photometric and spectral data, random forest classifer
+#Photometric, spectra, velocity dispersion, surface brightness, and ellipticity data - random forest classifer
 
 print "Random Forest Classifier"
 
