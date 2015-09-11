@@ -69,7 +69,7 @@ nn = Classifier(
         Layer("Sigmoid", units=100),
         Layer("Softmax")],
     learning_rate=0.00018,  #valid_set = ((X_valid, y_valid))
-    n_iter=1000,
+    n_iter=3000,
     valid_set = (X_valid, y_valid))
 print "Neural network specifications:"
 print nn
