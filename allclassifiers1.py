@@ -7,11 +7,15 @@ import climate
 import theanets
 import numpy as np
 from sklearn.cross_validation import train_test_split
+from sklearn import metrics
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.grid_search import GridSearchCV
 from sklearn import tree
 from sklearn.ensemble import RandomForestClassifier
+from sklearn import svm
+from sklearn.neighbors import KNeighborsClassifier
 from astroML.density_estimation import KNeighborsDensity
+from sklearn.naive_bayes import GaussianNB
 import matplotlib.pyplot as plt
 import time
 
@@ -61,6 +65,9 @@ print "Time = ", time.time() - startTime, "seconds"
 
 startTime = time.time()
 
+print
+print
+
 #-----------------------RF---------------------------
 print "Random Forest Classifier"
 clf = RandomForestClassifier() #No max depth initial, tweak as necessary later
@@ -81,6 +88,11 @@ probRF = clf.predict_proba(testingSet)
 tprRF, fprRF, threshRF = metrics.roc_curve(testingSetLabels, probRF[:, 0]) #true positive rate, false positive rate (ROC curve)
 
 print "Time = ", time.time() - startTime, "seconds"
+
+startTime = time.time()
+
+print
+print
 
 #------------------------NN---------------------------
 print "Neural Network Classifer"
@@ -109,6 +121,12 @@ tprNN, fprNN, threshNN = metrics.roc_curve(testingSetLabels, probNN[:, 0]) #true
 
 print "Time = ", time.time() - startTime, "seconds"
 
+startTime = time.time()
+
+print
+print
+
+
 #------------------------DT-----------------------------
 print "Decision Tree Classifier"
 
@@ -132,6 +150,11 @@ tprDT, fprDT, threshDT = metrics.roc_curve(testingSetLabels, probDT[:, 0]) #true
 
 print "Time = ", time.time() - startTime, "seconds"
 
+startTime = time.time()
+
+print
+print
+
 #------------------------SVM----------------------------
 print "Support Vector Machine Classifier"
 
@@ -151,6 +174,11 @@ probSVM = clf.predict_proba(testingSet)
 tprSVM, fprSVM, threshSVM = metrics.roc_curve(testingSetLabels, probSVM[:, 0]) #true positive rate, false positive rate (ROC curve)
 
 print "Time = ", time.time() - startTime, "seconds"
+
+startTime = time.time()
+
+print
+print
 
 #------------------------KNN----------------------------
 print "K-Neighbors Classifier"
@@ -173,6 +201,11 @@ tprKNN, fprKNN, threshKNN = metrics.roc_curve(testingSetLabels, probKNN[:, 0]) #
 
 print "Time = ", time.time() - startTime, "seconds"
 
+startTime = time.time()
+
+print
+print
+
 #------------------------NB-----------------------------
 print "Gaussian Naive - Bayes Classifier"
 
@@ -194,6 +227,11 @@ probNB = clf.predict_proba(testingSet)
 tprNB, fprNB, threshNB = metrics.roc_curve(testingSetLabels, probNB[:, 0]) #true positive rate, false positive rate (ROC curve)
 
 print "Time = ", time.time() - startTime, "seconds"
+
+startTime = time.time()
+
+print
+print
 #----------------------ROC Curve Plot-------------------
 plt.plot(fprRF, tprRF)
 plt.plot(fprNN, tprNN)
