@@ -94,38 +94,6 @@ startTime = time.time()
 print
 print
 
-#------------------------NN---------------------------
-print "Neural Network Classifer"
-
-nn = Classifier(
-    layers=[
-        Layer("Sigmoid", units=100),
-        Layer("Softmax")],
-    learning_rate=0.00018,  #valid_set = ((X_valid, y_valid))
-    n_iter=1000)
-print "Neural network specifications:"
-print nn
-
-nn.fit(trainingSet, trainingSetLabels)
-
-score1 = nn.score(trainingSet, trainingSetLabels)
-
-score3 = nn.score(testingSet, testingSetLabels)
-
-print "Training accuracy = ", score1
-
-print "Testing accuracy = ", score3
-
-probNN = nn.predict_proba(testingSet)
-tprNN, fprNN, threshNN = metrics.roc_curve(testingSetLabels, probNN[:, 0]) #true positive rate, false positive rate (ROC curve)
-
-print "Time = ", time.time() - startTime, "seconds"
-
-startTime = time.time()
-
-print
-print
-
 
 #------------------------DT-----------------------------
 print "Decision Tree Classifier"
@@ -158,7 +126,7 @@ print
 #------------------------SVM----------------------------
 print "Support Vector Machine Classifier"
 
-clf = svm.SVC(C = 100, gamma = 1.0) 
+clf = svm.SVC(C = 100, gamma = 1.0, probability=True) 
 clf_info = clf.fit(trainingSet, trainingSetLabels)
 print clf_info
 
@@ -232,6 +200,39 @@ startTime = time.time()
 
 print
 print
+
+#------------------------NN---------------------------
+print "Neural Network Classifer"
+
+nn = Classifier(
+    layers=[
+        Layer("Sigmoid", units=100),
+        Layer("Softmax")],
+    learning_rate=0.00018,  #valid_set = ((X_valid, y_valid))
+    n_iter=1000)
+print "Neural network specifications:"
+print nn
+
+nn.fit(trainingSet, trainingSetLabels)
+
+score1 = nn.score(trainingSet, trainingSetLabels)
+
+score3 = nn.score(testingSet, testingSetLabels)
+
+print "Training accuracy = ", score1
+
+print "Testing accuracy = ", score3
+
+probNN = nn.predict_proba(testingSet)
+tprNN, fprNN, threshNN = metrics.roc_curve(testingSetLabels, probNN[:, 0]) #true positive rate, false positive rate (ROC curve)
+
+print "Time = ", time.time() - startTime, "seconds"
+
+startTime = time.time()
+
+print
+print
+
 #----------------------ROC Curve Plot-------------------
 plt.plot(fprRF, tprRF)
 plt.plot(fprNN, tprNN)
