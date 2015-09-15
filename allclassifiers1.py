@@ -1,5 +1,4 @@
 
-#Trying old dummy model with SDSS inputs
 
 # some utilities for command line interfaces
 import climate
