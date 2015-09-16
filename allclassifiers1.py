@@ -122,31 +122,6 @@ startTime = time.time()
 print
 print
 
-#------------------------SVM----------------------------
-print "Support Vector Machine Classifier"
-
-clf = svm.SVC(C = 100, gamma = 0.1, probability=True) 
-clf_info = clf.fit(trainingSet, trainingSetLabels)
-print clf_info
-
-score1 = clf.score(trainingSet, trainingSetLabels)
-
-score3 = clf.score(testingSet, testingSetLabels)
-
-print "Training accuracy = ", score1
-
-print "Testing accuracy = ", score3
-
-probSVM = clf.predict_proba(testingSet)
-tprSVM, fprSVM, threshSVM = metrics.roc_curve(testingSetLabels, probSVM[:, 0]) #true positive rate, false positive rate (ROC curve)
-
-print "Time = ", time.time() - startTime, "seconds"
-
-startTime = time.time()
-
-print
-print
-
 #------------------------KNN----------------------------
 print "K-Neighbors Classifier"
 clf = KNeighborsClassifier(n_neighbors = 5) #starting off with 5 neighbors for now
@@ -232,6 +207,31 @@ startTime = time.time()
 print
 print
 
+#------------------------SVM----------------------------
+print "Support Vector Machine Classifier"
+
+clf = svm.SVC(C = 100, gamma = 0.1, probability=True) 
+clf_info = clf.fit(trainingSet, trainingSetLabels)
+print clf_info
+
+score1 = clf.score(trainingSet, trainingSetLabels)
+
+score3 = clf.score(testingSet, testingSetLabels)
+
+print "Training accuracy = ", score1
+
+print "Testing accuracy = ", score3
+
+probSVM = clf.predict_proba(testingSet)
+tprSVM, fprSVM, threshSVM = metrics.roc_curve(testingSetLabels, probSVM[:, 0]) #true positive rate, false positive rate (ROC curve)
+
+print "Time = ", time.time() - startTime, "seconds"
+
+startTime = time.time()
+
+print
+print
+
 #----------------------ROC Curve Plot-------------------
 plt.plot(fprRF, tprRF)
 plt.plot(fprNN, tprNN)
@@ -240,7 +240,7 @@ plt.plot(fprSVM, tprSVM)
 plt.plot(fprKNN, tprKNN)
 plt.plot(fprNB, tprNB)
 
-plt.legend([RF, NN, DT, SVM, KNN, NB], loc = "bottom right")
+plt.legend(["RF", "NN", "DT", "SVM", "KNN", "NB"], loc = "lower right")
 plt.xlabel("False positive rate")
 plt.ylabel("True positive rate")
 plt.title("ROC Curve for Various Classifiers")
