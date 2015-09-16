@@ -125,7 +125,7 @@ print
 #------------------------SVM----------------------------
 print "Support Vector Machine Classifier"
 
-clf = svm.SVC(C = 100, gamma = 1.0, probability=True) 
+clf = svm.SVC(C = 100, gamma = 0.1, probability=True) 
 clf_info = clf.fit(trainingSet, trainingSetLabels)
 print clf_info
 
