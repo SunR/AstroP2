@@ -20,7 +20,7 @@ import time
 
 from sknn.mlp import Classifier, Layer
 
-#---------------
+#-----------------
 
 climate.enable_default_logging()
 
