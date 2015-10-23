@@ -84,7 +84,7 @@ print "Training accuracy = ", score1
 print "Testing accuracy = ", score3
 
 probRF = clf.predict_proba(testingSet)
-tprRF, fprRF, threshRF = metrics.roc_curve(testingSetLabels, probRF[:, 0]) #true positive rate, false positive rate (ROC curve)
+fprRF, tprRF, threshRF = metrics.roc_curve(testingSetLabels, probRF[:, 0]) #true positive rate, false positive rate (ROC curve)
 
 print "Time = ", time.time() - startTime, "seconds"
 
@@ -113,7 +113,7 @@ print "Training accuracy = ", score1
 print "Testing accuracy = ", score3
 
 probDT = clf.predict_proba(testingSet)
-tprDT, fprDT, threshDT = metrics.roc_curve(testingSetLabels, probDT[:, 0]) #true positive rate, false positive rate (ROC curve)
+fprDT, tprDT, threshDT = metrics.roc_curve(testingSetLabels, probDT[:, 0]) #true positive rate, false positive rate (ROC curve)
 
 print "Time = ", time.time() - startTime, "seconds"
 
@@ -139,7 +139,7 @@ print "Training accuracy = ", score1
 print "Testing accuracy = ", score3
 
 probKNN = clf.predict_proba(testingSet)
-tprKNN, fprKNN, threshKNN = metrics.roc_curve(testingSetLabels, probKNN[:, 0]) #true positive rate, false positive rate (ROC curve)
+fprKNN, tprKNN, threshKNN = metrics.roc_curve(testingSetLabels, probKNN[:, 0]) #true positive rate, false positive rate (ROC curve)
 
 print "Time = ", time.time() - startTime, "seconds"
 
@@ -166,7 +166,7 @@ print "Training accuracy = ", score1
 print "Testing accuracy = ", score3
 
 probNB = clf.predict_proba(testingSet)
-tprNB, fprNB, threshNB = metrics.roc_curve(testingSetLabels, probNB[:, 0]) #true positive rate, false positive rate (ROC curve)
+fprNB, tprNB, threshNB = metrics.roc_curve(testingSetLabels, probNB[:, 0]) #true positive rate, false positive rate (ROC curve)
 
 print "Time = ", time.time() - startTime, "seconds"
 
@@ -198,7 +198,7 @@ print "Training accuracy = ", score1
 print "Testing accuracy = ", score3
 
 probNN = nn.predict_proba(testingSet)
-tprNN, fprNN, threshNN = metrics.roc_curve(testingSetLabels, probNN[:, 0]) #true positive rate, false positive rate (ROC curve)
+fprNN, tprNN, threshNN = metrics.roc_curve(testingSetLabels, probNN[:, 0]) #true positive rate, false positive rate (ROC curve)
 
 print "Time = ", time.time() - startTime, "seconds"
 
@@ -223,7 +223,7 @@ print "Training accuracy = ", score1
 print "Testing accuracy = ", score3
 
 probSVM = clf.predict_proba(testingSet)
-tprSVM, fprSVM, threshSVM = metrics.roc_curve(testingSetLabels, probSVM[:, 0]) #true positive rate, false positive rate (ROC curve)
+fprSVM, tprSVM, threshSVM = metrics.roc_curve(testingSetLabels, probSVM[:, 0]) #true positive rate, false positive rate (ROC curve)
 
 print "Time = ", time.time() - startTime, "seconds"
 
